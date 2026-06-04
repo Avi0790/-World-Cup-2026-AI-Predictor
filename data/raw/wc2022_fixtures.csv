@@ -1,0 +1,49 @@
+team_a,team_b,goals_a,goals_b,outcome,rating_a,rating_b,prob_a_win,prob_draw,prob_b_win,neutral,stage,group,tournament
+Qatar,Ecuador,4,3,home_win,1490,1570,0.2785,0.28,0.4415,True,group,A,FIFA World Cup 2022
+Qatar,Senegal,2,1,home_win,1490,1610,0.2404,0.28,0.4796,True,group,A,FIFA World Cup 2022
+Qatar,Netherlands,1,1,draw,1490,1750,0.1317,0.28,0.5883,True,group,A,FIFA World Cup 2022
+Ecuador,Senegal,2,3,away_win,1570,1610,0.3187,0.28,0.4013,True,group,A,FIFA World Cup 2022
+Ecuador,Netherlands,3,4,away_win,1570,1750,0.1886,0.28,0.5314,True,group,A,FIFA World Cup 2022
+Senegal,Netherlands,2,3,away_win,1610,1750,0.2223,0.28,0.4977,True,group,A,FIFA World Cup 2022
+England,Iran,3,2,home_win,1790,1530,0.5883,0.28,0.1317,True,group,B,FIFA World Cup 2022
+England,USA,0,0,draw,1790,1620,0.5233,0.28,0.1967,True,group,B,FIFA World Cup 2022
+England,Wales,3,4,away_win,1790,1610,0.5314,0.28,0.1886,True,group,B,FIFA World Cup 2022
+Iran,USA,2,2,draw,1530,1620,0.2688,0.28,0.4512,True,group,B,FIFA World Cup 2022
+Iran,Wales,3,4,away_win,1530,1610,0.2785,0.28,0.4415,True,group,B,FIFA World Cup 2022
+USA,Wales,1,0,home_win,1620,1610,0.3704,0.28,0.3496,True,group,B,FIFA World Cup 2022
+Argentina,Saudi Arabia,0,0,draw,1850,1520,0.6263,0.28,0.0937,True,group,C,FIFA World Cup 2022
+Argentina,Mexico,2,1,home_win,1850,1630,0.5617,0.28,0.1583,True,group,C,FIFA World Cup 2022
+Argentina,Poland,5,0,home_win,1850,1600,0.582,0.28,0.138,True,group,C,FIFA World Cup 2022
+Saudi Arabia,Mexico,3,4,away_win,1520,1630,0.2497,0.28,0.4703,True,group,C,FIFA World Cup 2022
+Saudi Arabia,Poland,3,3,draw,1520,1600,0.2785,0.28,0.4415,True,group,C,FIFA World Cup 2022
+Mexico,Poland,1,4,away_win,1630,1600,0.391,0.28,0.329,True,group,C,FIFA World Cup 2022
+France,Australia,0,1,away_win,1840,1580,0.5883,0.28,0.1317,True,group,D,FIFA World Cup 2022
+France,Denmark,1,1,draw,1840,1670,0.5233,0.28,0.1967,True,group,D,FIFA World Cup 2022
+France,Tunisia,3,2,home_win,1840,1540,0.6113,0.28,0.1087,True,group,D,FIFA World Cup 2022
+Australia,Denmark,1,2,away_win,1580,1670,0.2688,0.28,0.4512,True,group,D,FIFA World Cup 2022
+Australia,Tunisia,0,1,away_win,1580,1540,0.4013,0.28,0.3187,True,group,D,FIFA World Cup 2022
+Denmark,Tunisia,2,1,home_win,1670,1540,0.4887,0.28,0.2313,True,group,D,FIFA World Cup 2022
+Spain,Costa Rica,3,0,home_win,1800,1510,0.6059,0.28,0.1141,True,group,E,FIFA World Cup 2022
+Spain,Germany,2,1,home_win,1800,1780,0.3807,0.28,0.3393,True,group,E,FIFA World Cup 2022
+Spain,Japan,2,1,home_win,1800,1640,0.515,0.28,0.205,True,group,E,FIFA World Cup 2022
+Costa Rica,Germany,0,2,away_win,1510,1780,0.1256,0.28,0.5944,True,group,E,FIFA World Cup 2022
+Costa Rica,Japan,0,5,away_win,1510,1640,0.2313,0.28,0.4887,True,group,E,FIFA World Cup 2022
+Germany,Japan,2,0,home_win,1780,1640,0.4977,0.28,0.2223,True,group,E,FIFA World Cup 2022
+Belgium,Canada,0,0,draw,1720,1560,0.515,0.28,0.205,True,group,F,FIFA World Cup 2022
+Belgium,Morocco,3,4,away_win,1720,1650,0.4316,0.28,0.2884,True,group,F,FIFA World Cup 2022
+Belgium,Croatia,0,0,draw,1720,1700,0.3807,0.28,0.3393,True,group,F,FIFA World Cup 2022
+Canada,Morocco,1,2,away_win,1560,1650,0.2688,0.28,0.4512,True,group,F,FIFA World Cup 2022
+Canada,Croatia,0,0,draw,1560,1700,0.2223,0.28,0.4977,True,group,F,FIFA World Cup 2022
+Morocco,Croatia,3,1,home_win,1650,1700,0.3085,0.28,0.4115,True,group,F,FIFA World Cup 2022
+Brazil,Serbia,1,1,draw,1820,1595,0.5652,0.28,0.1548,True,group,G,FIFA World Cup 2022
+Brazil,Switzerland,1,0,home_win,1820,1660,0.515,0.28,0.205,True,group,G,FIFA World Cup 2022
+Brazil,Cameroon,1,3,away_win,1820,1560,0.5883,0.28,0.1317,True,group,G,FIFA World Cup 2022
+Serbia,Switzerland,4,2,home_win,1595,1660,0.2934,0.28,0.4266,True,group,G,FIFA World Cup 2022
+Serbia,Cameroon,4,5,away_win,1595,1560,0.3961,0.28,0.3239,True,group,G,FIFA World Cup 2022
+Switzerland,Cameroon,3,2,home_win,1660,1560,0.4608,0.28,0.2592,True,group,G,FIFA World Cup 2022
+Portugal,Ghana,2,3,away_win,1760,1550,0.5545,0.28,0.1655,True,group,H,FIFA World Cup 2022
+Portugal,Uruguay,1,2,away_win,1760,1680,0.4415,0.28,0.2785,True,group,H,FIFA World Cup 2022
+Portugal,South Korea,2,1,home_win,1760,1590,0.5233,0.28,0.1967,True,group,H,FIFA World Cup 2022
+Ghana,Uruguay,2,3,away_win,1550,1680,0.2313,0.28,0.4887,True,group,H,FIFA World Cup 2022
+Ghana,South Korea,2,1,home_win,1550,1590,0.3187,0.28,0.4013,True,group,H,FIFA World Cup 2022
+Uruguay,South Korea,3,2,home_win,1680,1590,0.4512,0.28,0.2688,True,group,H,FIFA World Cup 2022

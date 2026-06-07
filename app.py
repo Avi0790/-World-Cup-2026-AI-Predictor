@@ -20,7 +20,7 @@ st.set_page_config(
     page_title="World Cup 2026 AI Predictor",
     page_icon="🏆",
     layout="wide",
-    initial_sidebar_state="auto"
+    initial_sidebar_state="expanded"
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -197,6 +197,18 @@ st.markdown("""
 }
 .hero-stat-num  { font-size: 28px; font-weight: 700; color: #fff; }
 .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+/* Mobile sidebar fix */
+@media (max-width: 768px) {
+    section[data-testid="stSidebar"] {
+        width: 85% !important;
+    }
+
+    .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
 
 /* Section headers */
 .section-header {

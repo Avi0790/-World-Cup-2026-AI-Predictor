@@ -1,4 +1,6 @@
-import pandas as pd, numpy as np, os
+import pandas as pd
+import numpy as np
+import os
 from collections import defaultdict
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -31,51 +33,153 @@ RATINGS = {
     "Iraq":1500,"New Zealand":1450,"Panama":1470,"Cape Verde":1480,"Curacao":1400,
 }
 
-def ko(ta, tb):
-    ra=RATINGS.get(ta,1500); rb=RATINGS.get(tb,1500)
-    pa=1/(1+10**(-(ra-rb)/400))
-    return ta if np.random.random()<pa else tb
+
+def ko(team_a, team_b):
+    ra = RATINGS.get(team_a, 1500)
+    rb = RATINGS.get(team_b, 1500)
+
+    p_a = 1 / (1 + 10 ** (-(ra - rb) / 400))
+
+    return team_a if np.random.random() < p_a else team_b
+
 
 def sim_group(groups):
-    q={}
-    for g,teams in groups.items():
-        pts=defaultdict(int); gd=defaultdict(int)
+    qualified = {}
+
+    for group, teams in groups.items():
+        pts = defaultdict(int)
+        gd = defaultdict(int)
+
         for i in range(len(teams)):
-            for j in range(i+1,len(teams)):
-                ta,tb=teams[i],teams[j]
-                ra=RATINGS.get(ta,1500); rb=RATINGS.get(tb,1500)
-                pa=1/(1+10**(-(ra-rb)/400))*0.72
-                pd_=0.27
-                r=np.random.random()
-                if r<pa: pts[ta]+=3;gd[ta]+=1;gd[tb]-=1
-                elif r<pa+pd_: pts[ta]+=1;pts[tb]+=1
-                else: pts[tb]+=3;gd[tb]+=1;gd[ta]-=1
-        q[g]=sorted(teams,key=lambda t:(pts[t],gd[t]),reverse=True)[:2]
-    return q
+            for j in range(i + 1, len(teams)):
+                ta, tb = teams[i], teams[j]
+
+                ra = RATINGS.get(ta, 1500)
+                rb = RATINGS.get(tb, 1500)
+
+                p_win = (1 / (1 + 10 ** (-(ra - rb) / 400))) * 0.72
+                p_draw = 0.27
+
+                r = np.random.random()
+
+                if r < p_win:
+                    pts[ta] += 3
+                    gd[ta] += 1
+                    gd[tb] -= 1
+
+                elif r < p_win + p_draw:
+                    pts[ta] += 1
+                    pts[tb] += 1
+
+                else:
+                    pts[tb] += 3
+                    gd[tb] += 1
+                    gd[ta] -= 1
+
+        qualified[group] = sorted(
+            teams,
+            key=lambda t: (pts[t], gd[t]),
+            reverse=True
+        )[:2]
+
+    return qualified
+
 
 def run_simulation(n=500):
-    print(f"Running {n} simulations with correct 2026 teams...")
-    cc=defaultdict(int)
+    print(f"Running {n} simulations with corrected 2026 teams...")
+
+    champion_count = defaultdict(int)
+
     for _ in range(n):
-        q=sim_group(WC_2026_GROUPS)
-        gl=list(q.keys())
-        r16=[]
-        for i in range(0,len(gl),2):
-            g1,g2=gl[i],gl[i+1]
-            r16+=[(q[g1][0],q[g2][1]),(q[g2][0],q[g1][1])]
-        qf=[ko(a,b) for a,b in r16]
-        sf=[ko(qf[i],qf[i+1]) for i in range(0,len(qf),2)]
-        fi=[ko(sf[i],sf[i+1]) for i in range(0,len(sf),2)]
-        cc[ko(fi[0],fi[1])]+=1
-    all_t=[t for g in WC_2026_GROUPS.values() for t in g]
-    rows=[{"team":t,"champion_pct":round(cc.get(t,0)/n*100,1)} for t in all_t]
-    df=pd.DataFrame(rows).sort_values("champion_pct",ascending=False)
-    os.makedirs(os.path.join(BASE_DIR,"../data/processed"),exist_ok=True)
-    df.to_csv(os.path.join(BASE_DIR,"../data/processed/simulation_results.csv"),index=False)
+
+        # Simulate groups
+        q = sim_group(WC_2026_GROUPS)
+
+        # Collect 24 qualified teams
+        qualified_teams = []
+
+        for group in q:
+            qualified_teams.extend(q[group])
+
+        # Shuffle bracket for fairness
+        np.random.shuffle(qualified_teams)
+
+        # Round of 24 → 12 winners
+        r24 = [
+            ko(qualified_teams[i], qualified_teams[i + 1])
+            for i in range(0, len(qualified_teams), 2)
+        ]
+
+        # Give top-rated 4 teams a bye (simulate realistic bracket)
+        r24_sorted = sorted(
+            r24,
+            key=lambda t: RATINGS.get(t, 1500),
+            reverse=True
+        )
+
+        quarterfinalists = r24_sorted[:8]
+
+        # Quarterfinals → 4
+        sf = [
+            ko(quarterfinalists[i], quarterfinalists[i + 1])
+            for i in range(0, len(quarterfinalists), 2)
+        ]
+
+        # Finalists
+        finalists = [
+            ko(sf[i], sf[i + 1])
+            for i in range(0, len(sf), 2)
+        ]
+
+        champion = ko(finalists[0], finalists[1])
+
+        champion_count[champion] += 1
+
+    all_teams = [
+        team
+        for group in WC_2026_GROUPS.values()
+        for team in group
+    ]
+
+    rows = [
+        {
+            "team": team,
+            "champion_pct": round(
+                champion_count.get(team, 0) / n * 100,
+                1
+            )
+        }
+        for team in all_teams
+    ]
+
+    df = pd.DataFrame(rows).sort_values(
+        "champion_pct",
+        ascending=False
+    )
+
+    os.makedirs(
+        os.path.join(BASE_DIR, "../data/processed"),
+        exist_ok=True
+    )
+
+    df.to_csv(
+        os.path.join(
+            BASE_DIR,
+            "../data/processed/simulation_results.csv"
+        ),
+        index=False
+    )
+
     print("Top 10 champion probabilities:")
-    for _,r in df.head(10).iterrows():
-        print(f"  {r['team']:<30}{r['champion_pct']}%")
+
+    for _, row in df.head(10).iterrows():
+        print(
+            f"  {row['team']:<30}"
+            f"{row['champion_pct']}%"
+        )
+
     return df
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     run_simulation(500)

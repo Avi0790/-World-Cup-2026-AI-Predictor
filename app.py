@@ -459,7 +459,7 @@ if not st.session_state.logged_in:
     st.markdown("<div class='section-header'>🤖 How the AI Works</div>", unsafe_allow_html=True)
     hc = st.columns(4)
     steps = [
-        ("01","Historical Data","3,000+ international matches used to train the model"),
+        ("01","Historical Data","49,000+ international matches used to train the model"),
         ("02","Team Intelligence","Elo ratings, form, goals scored/conceded, WC experience"),
         ("03","XGBoost Model","ML model predicts win %, draw %, xG, and scoreline"),
         ("04","Simulation","Monte Carlo runs the full tournament 500+ times"),
@@ -639,7 +639,7 @@ if page == "🏠  Home":
                 <div class="hero-stat-label">Matches</div>
             </div>
             <div>
-                <div class="hero-stat-num">3,000+</div>
+                <div class="hero-stat-num">49,000+</div>
                 <div class="hero-stat-label">Training Matches</div>
             </div>
             <div>
@@ -697,7 +697,7 @@ if page == "🏠  Home":
     st.markdown("<div class='section-header'>🤖 How the AI Works</div>", unsafe_allow_html=True)
     hcols = st.columns(4)
     steps = [
-        ("01","Historical Data","3,000+ international matches from 2010–2026 used for training"),
+        ("01","Historical Data","49,000+ international matches from 2010–2026 used for training"),
         ("02","17 Features","Elo ratings, recent form, goals scored/conceded, WC titles, squad value"),
         ("03","XGBoost Model","Gradient boosted trees predict win %, draw %, xG, and confidence"),
         ("04","Monte Carlo","Full tournament simulated 500+ times for probability distributions"),

@@ -144,7 +144,7 @@ st.markdown("""
 .stApp { background: #060b18; color: #ffffff; }
 
 /* Hide default streamlit elements */
-#MainMenu, footer, header { visibility: hidden; }
+#MainMenu, footer{ visibility: hidden; }
 .block-container { padding-top: 1rem !important; }
 
 /* Hero section */

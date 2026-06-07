@@ -196,17 +196,46 @@ st.markdown("""
     flex-wrap: wrap;
 }
 .hero-stat-num  { font-size: 28px; font-weight: 700; color: #fff; }
-.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }s
 
-/* Mobile sidebar fix */
+/* ===== MOBILE SIDEBAR FIX ===== */
 @media (max-width: 768px) {
+
+    /* Make sidebar visible when opened */
     section[data-testid="stSidebar"] {
-        width: 85% !important;
+        display: block !important;
+        width: 85vw !important;
+        min-width: 85vw !important;
+        background: #0a0f1e !important;
+        z-index: 999999 !important;
     }
 
+    /* Make menu button visible */
+    button[kind="header"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 999999 !important;
+    }
+
+    /* Reduce page padding for mobile */
     .block-container {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
+    }
+
+    /* Hero section responsive */
+    .hero {
+        padding: 28px 22px !important;
+    }
+
+    .hero-title {
+        font-size: 42px !important;
+        line-height: 1.1 !important;
+    }
+
+    .hero-stats {
+        gap: 18px !important;
     }
 }
 

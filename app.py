@@ -27,47 +27,56 @@ st.set_page_config(
 # FLAGS & TEAM DATA
 # ══════════════════════════════════════════════════════════════════════════════
 FLAGS = {
-    "England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","France":"🇫🇷","Croatia":"🇭🇷","Norway":"🇳🇴",
-    "Portugal":"🇵🇹","Germany":"🇩🇪","Netherlands":"🇳🇱","Switzerland":"🇨🇭",
-    "Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Spain":"🇪🇸","Austria":"🇦🇹","Belgium":"🇧🇪",
-    "Bosnia and Herzegovina":"🇧🇦","Sweden":"🇸🇪","Turkey":"🇹🇷","Czechia":"🇨🇿",
-    "Argentina":"🇦🇷","Brazil":"🇧🇷","Ecuador":"🇪🇨","Uruguay":"🇺🇾",
-    "Colombia":"🇨🇴","Paraguay":"🇵🇾","USA":"🇺🇸","Mexico":"🇲🇽","Canada":"🇨🇦",
-    "Jamaica":"🇯🇲","Suriname":"🇸🇷","Panama":"🇵🇦","Honduras":"🇭🇳",
-    "Costa Rica":"🇨🇷","Japan":"🇯🇵","South Korea":"🇰🇷","Australia":"🇦🇺",
-    "Iran":"🇮🇷","Jordan":"🇯🇴","Uzbekistan":"🇺🇿","Morocco":"🇲🇦",
-    "Senegal":"🇸🇳","Egypt":"🇪🇬","Algeria":"🇩🇿","Tunisia":"🇹🇳",
-    "Ghana":"🇬🇭","Cameroon":"🇨🇲","DR Congo":"🇨🇩","South Africa":"🇿🇦",
-    "New Zealand":"🇳🇿","Bolivia":"🇧🇴","New Caledonia":"🇳🇨",
+    # Europe (16)
+    'France':'🇫🇷','Spain':'🇪🇸','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'Portugal':'🇵🇹','Germany':'🇩🇪','Netherlands':'🇳🇱','Belgium':'🇧🇪',
+    'Croatia':'🇭🇷','Norway':'🇳🇴','Switzerland':'🇨🇭','Austria':'🇦🇹',
+    'Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    'Sweden':'🇸🇪','Turkey':'🇹🇷','Czechia':'🇨🇿',
+    'Bosnia and Herzegovina':'🇧🇦',
+    # CONMEBOL (6)
+    'Brazil':'🇧🇷','Argentina':'🇦🇷','Colombia':'🇨🇴','Uruguay':'🇺🇾',
+    'Ecuador':'🇪🇨','Paraguay':'🇵🇾',
+    # CONCACAF (8)
+    'USA':'🇺🇸','Mexico':'🇲🇽','Canada':'🇨🇦','Panama':'🇵🇦',
+    'Haiti':'🇭🇹','Jamaica':'🇯🇲','Curacao':'🇨🇼','Costa Rica':'🇨🇷',
+    # AFC (9)
+    'Japan':'🇯🇵','South Korea':'🇰🇷','Australia':'🇦🇺','Iran':'🇮🇷',
+    'Jordan':'🇯🇴','Uzbekistan':'🇺🇿','Saudi Arabia':'🇸🇦','Iraq':'🇮🇶','Qatar':'🇶🇦',
+    # CAF (10)
+    'Morocco':'🇲🇦','Senegal':'🇸🇳','Egypt':'🇪🇬','Algeria':'🇩🇿',
+    'Tunisia':'🇹🇳','Ghana':'🇬🇭','Cameroon':'🇨🇲','DR Congo':'🇨🇩',
+    'South Africa':'🇿🇦','Ivory Coast':'🇨🇮','Cape Verde':'🇨🇻',
+    # OFC / Playoff
+    'New Zealand':'🇳🇿',
 }
 
 TEAM_RATINGS = {
-    "France":1840,"Argentina":1850,"England":1790,"Brazil":1820,"Spain":1800,
-    "Germany":1780,"Portugal":1760,"Netherlands":1750,"Belgium":1720,"Croatia":1700,
-    "Uruguay":1680,"USA":1620,"Mexico":1630,"Japan":1640,"Morocco":1650,
-    "Senegal":1610,"Australia":1580,"South Korea":1590,"Switzerland":1660,
-    "Colombia":1660,"Norway":1630,"Scotland":1600,"Austria":1580,"Turkey":1590,
-    "Czechia":1570,"Sweden":1580,"Bosnia and Herzegovina":1540,"Ecuador":1570,
-    "Paraguay":1540,"Canada":1560,"Jamaica":1480,"Suriname":1420,"Panama":1470,
-    "Honduras":1450,"Costa Rica":1510,"Iran":1530,"Jordan":1490,"Uzbekistan":1470,
-    "Egypt":1550,"Algeria":1540,"Tunisia":1540,"Ghana":1550,"Cameroon":1560,
-    "DR Congo":1520,"South Africa":1510,"New Zealand":1450,"Bolivia":1430,
-    "New Caledonia":1300,
+    'France':1870,'Spain':1855,'Argentina':1850,'England':1820,'Portugal':1810,
+    'Brazil':1800,'Netherlands':1760,'Morocco':1740,'Belgium':1730,'Germany':1720,
+    'Croatia':1700,'Colombia':1680,'Senegal':1660,'Mexico':1640,'USA':1630,
+    'Uruguay':1680,'Japan':1640,'Switzerland':1650,'Norway':1630,'Austria':1600,
+    'Australia':1580,'South Korea':1590,'Ecuador':1570,'Tunisia':1540,'Ghana':1550,
+    'Saudi Arabia':1520,'Iran':1530,'Ivory Coast':1580,'South Africa':1510,
+    'Czechia':1570,'Scotland':1600,'Bosnia and Herzegovina':1540,'Sweden':1580,
+    'Turkey':1590,'Canada':1560,'Qatar':1490,'Haiti':1420,'Paraguay':1540,
+    'Algeria':1540,'Jordan':1490,'Uzbekistan':1470,'DR Congo':1520,'Egypt':1550,
+    'Iraq':1500,'New Zealand':1450,'Panama':1470,'Cape Verde':1480,'Curacao':1400,
 }
 
 WC_2026_GROUPS = {
-    "A":["USA","Mexico","Canada","Uruguay"],
-    "B":["Brazil","Argentina","Ecuador","Bolivia"],
-    "C":["France","Belgium","Morocco","Senegal"],
-    "D":["Spain","Portugal","Croatia","Turkey"],
-    "E":["England","Netherlands","Denmark","Panama"],
-    "F":["Germany","Switzerland","Austria","Czechia"],
-    "G":["Japan","South Korea","Australia","Jordan"],
-    "H":["Algeria","Egypt","Ghana","Cameroon"],
-    "I":["Colombia","Paraguay","Norway","New Zealand"],
-    "J":["Scotland","Sweden","Jamaica","Suriname"],
-    "K":["Iran","Uzbekistan","DR Congo","Honduras"],
-    "L":["Tunisia","Costa Rica","South Africa","New Caledonia"],
+    'A': ['Mexico',      'South Korea',  'South Africa',          'Czechia'],
+    'B': ['Canada',      'Switzerland',  'Qatar',                 'Bosnia and Herzegovina'],
+    'C': ['Brazil',      'Morocco',      'Scotland',              'Haiti'],
+    'D': ['USA',         'Australia',    'Paraguay',              'Turkey'],
+    'E': ['Germany',     'Ecuador',      'Ivory Coast',           'Curacao'],
+    'F': ['Netherlands', 'Japan',        'Tunisia',               'Sweden'],
+    'G': ['Belgium',     'Iran',         'Egypt',                 'New Zealand'],
+    'H': ['Spain',       'Uruguay',      'Saudi Arabia',          'Cape Verde'],
+    'I': ['France',      'Senegal',      'Norway',                'Iraq'],
+    'J': ['Argentina',   'Austria',      'Algeria',               'Jordan'],
+    'K': ['Portugal',    'Colombia',     'Uzbekistan',            'DR Congo'],
+    'L': ['England',     'Croatia',      'Panama',                'Ghana'],
 }
 
 STAR_PLAYERS = {
@@ -144,8 +153,21 @@ st.markdown("""
 .stApp { background: #060b18; color: #ffffff; }
 
 /* Hide default streamlit elements */
-#MainMenu, footer{ visibility: hidden; }
-.block-container { padding-top: 1rem !important; }
+#MainMenu, footer, header { visibility: hidden; }
+.block-container { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+
+/* Fix 3: Replace red primary button with blue-purple gradient */
+.stButton > button[kind="primary"] {
+    background: linear-gradient(90deg, #2563eb, #7c3aed) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: opacity 0.2s !important;
+}
+.stButton > button[kind="primary"]:hover {
+    opacity: 0.85 !important;
+}
 
 /* Hero section */
 .hero {
@@ -196,48 +218,7 @@ st.markdown("""
     flex-wrap: wrap;
 }
 .hero-stat-num  { font-size: 28px; font-weight: 700; color: #fff; }
-.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }s
-
-/* ===== MOBILE SIDEBAR FIX ===== */
-@media (max-width: 768px) {
-
-    /* Make sidebar visible when opened */
-    section[data-testid="stSidebar"] {
-        display: block !important;
-        width: 85vw !important;
-        min-width: 85vw !important;
-        background: #0a0f1e !important;
-        z-index: 999999 !important;
-    }
-
-    /* Make menu button visible */
-    button[kind="header"] {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        z-index: 999999 !important;
-    }
-
-    /* Reduce page padding for mobile */
-    .block-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-
-    /* Hero section responsive */
-    .hero {
-        padding: 28px 22px !important;
-    }
-
-    .hero-title {
-        font-size: 42px !important;
-        line-height: 1.1 !important;
-    }
-
-    .hero-stats {
-        gap: 18px !important;
-    }
-}
+.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
 
 /* Section headers */
 .section-header {
@@ -418,6 +399,29 @@ h1,h2,h3,h4 { color: #ffffff !important; font-weight: 700 !important; }
 .stTabs [data-baseweb="tab"] { color: rgba(255,255,255,0.5) !important; }
 .stTabs [aria-selected="true"] { color: #fff !important; }
 .stDivider { border-color: rgba(255,255,255,0.08) !important; }
+
+/* Sign out button — subtle */
+section[data-testid="stSidebar"] .stButton > button {
+    background: transparent !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: rgba(255,255,255,0.4) !important;
+    font-size: 12px !important;
+    padding: 4px 12px !important;
+    border-radius: 6px !important;
+}
+section[data-testid="stSidebar"] .stButton > button:hover {
+    border-color: rgba(255,255,255,0.25) !important;
+    color: rgba(255,255,255,0.7) !important;
+}
+
+/* Tighter section headers */
+.section-header {
+    margin-top: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+/* Page titles less giant */
+h1 { font-size: 1.6rem !important; margin-bottom: 4px !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -500,7 +504,7 @@ if not st.session_state.logged_in:
     st.markdown("<div class='section-header'>🤖 How the AI Works</div>", unsafe_allow_html=True)
     hc = st.columns(4)
     steps = [
-        ("01","Historical Data","49,000+ international matches used to train the model"),
+        ("01","Historical Data","3,000+ international matches used to train the model"),
         ("02","Team Intelligence","Elo ratings, form, goals scored/conceded, WC experience"),
         ("03","XGBoost Model","ML model predicts win %, draw %, xG, and scoreline"),
         ("04","Simulation","Monte Carlo runs the full tournament 500+ times"),
@@ -647,7 +651,12 @@ with st.sidebar:
         "📋  My Predictions",
     ])
     st.divider()
-    if st.button("🚪 Sign Out", use_container_width=True):
+    st.markdown(f"""
+    <div style='text-align:center;margin-bottom:8px'>
+        <span style='font-size:11px;color:rgba(255,255,255,0.25)'>Signed in as</span><br>
+        <span style='font-size:12px;color:rgba(255,255,255,0.5)'>{st.session_state.username}</span>
+    </div>""", unsafe_allow_html=True)
+    if st.button("Sign out", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username  = ""
         st.rerun()
@@ -665,10 +674,10 @@ if page == "🏠  Home":
     st.markdown(f"""
     <div class="hero">
         <div class="hero-eyebrow">⚽ FIFA World Cup 2026 · 48 Teams · 104 Matches</div>
-        <div class="hero-title">AI-Powered<br><span>World Cup Predictions</span></div>
+        <div class="hero-title">Simulate the 2026<br><span>World Cup with AI</span></div>
         <div class="hero-sub">
-            Machine learning predictions for every match. Simulate the full tournament,
-            analyze team intelligence, and track your predictions — all in one platform.
+            Built on 49,000+ real international matches. Uses XGBoost, Elo ratings,
+            and Monte Carlo simulation to forecast outcomes — from group stage to the Final.
         </div>
         <div class="hero-stats">
             <div>
@@ -738,7 +747,7 @@ if page == "🏠  Home":
     st.markdown("<div class='section-header'>🤖 How the AI Works</div>", unsafe_allow_html=True)
     hcols = st.columns(4)
     steps = [
-        ("01","Historical Data","49,000+ international matches from 2010–2026 used for training"),
+        ("01","Historical Data","3,000+ international matches from 2010–2026 used for training"),
         ("02","17 Features","Elo ratings, recent form, goals scored/conceded, WC titles, squad value"),
         ("03","XGBoost Model","Gradient boosted trees predict win %, draw %, xG, and confidence"),
         ("04","Monte Carlo","Full tournament simulated 500+ times for probability distributions"),
@@ -771,15 +780,23 @@ elif page == "⚽  Match Predictor":
     st.markdown("<h1>⚽ Match Predictor</h1>", unsafe_allow_html=True)
     st.markdown("<p style='color:rgba(255,255,255,.45);margin-top:-12px'>XGBoost model · Elo ratings · xG estimation · Why this prediction</p>", unsafe_allow_html=True)
 
-    c1,c2,c3 = st.columns([2,1,2])
+    # Centered matchup card
+    st.markdown("""
+    <div style='background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
+                border-radius:16px;padding:24px 32px;margin-bottom:16px'>
+    """, unsafe_allow_html=True)
+
+    c1,c2,c3 = st.columns([5,2,5])
     with c1:
-        sel_a  = st.selectbox("Team A", TWF, index=TWF.index(ft("Argentina")))
+        sel_a  = st.selectbox("", TWF, index=TWF.index(ft("Argentina")), label_visibility="collapsed", key="team_a_sel")
         team_a = strip_flag(sel_a)
     with c2:
-        st.markdown("<br><br><div style='text-align:center;font-size:20px;color:rgba(255,255,255,.3)'>VS</div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align:center;padding-top:8px;font-size:18px;font-weight:700;color:rgba(255,255,255,0.3)'>VS</div>", unsafe_allow_html=True)
     with c3:
-        sel_b  = st.selectbox("Team B", TWF, index=TWF.index(ft("France")))
+        sel_b  = st.selectbox("", TWF, index=TWF.index(ft("France")), label_visibility="collapsed", key="team_b_sel")
         team_b = strip_flag(sel_b)
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
     c4,c5 = st.columns(2)
     with c4: stage   = st.selectbox("Stage", ["group","round_of_16","quarter","semi","final"])

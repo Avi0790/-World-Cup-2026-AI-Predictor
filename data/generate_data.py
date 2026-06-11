@@ -1,188 +1,68 @@
 """
-FIFA Oracle — Data Generator
-Generates realistic historical World Cup + international match data
-for model training. Based on real tournament results and FIFA rankings.
+World Cup 2026 — Real Data Pipeline
+Uses 49,000+ real international match results.
 """
+import pandas as pd, numpy as np, json, os, urllib.request
 
-import pandas as pd
-import numpy as np
-import json
-import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+RAW_DIR  = os.path.join(BASE_DIR, "raw")
+PROC_DIR = os.path.join(BASE_DIR, "processed")
+os.makedirs(RAW_DIR, exist_ok=True)
+os.makedirs(PROC_DIR, exist_ok=True)
 
-np.random.seed(42)
+RESULTS_URL  = "https://raw.githubusercontent.com/martj42/international_results/master/results.csv"
+RESULTS_PATH = os.path.join(RAW_DIR, "results.csv")
 
-# ── Real FIFA/Elo-based team ratings (approx) ────────────────────────────────
 TEAM_RATINGS = {
-    "Argentina":   1850, "France":      1840, "England":     1790,
-    "Brazil":      1820, "Spain":        1800, "Germany":     1780,
-    "Portugal":    1760, "Netherlands":  1750, "Belgium":     1720,
-    "Croatia":     1700, "Italy":        1710, "Uruguay":     1680,
-    "USA":         1620, "Mexico":       1630, "Japan":       1640,
-    "Morocco":     1650, "Senegal":      1610, "Australia":   1580,
-    "South Korea": 1590, "Switzerland":  1660, "Denmark":     1670,
-    "Poland":      1600, "Serbia":       1595, "Ecuador":     1570,
-    "Cameroon":    1560, "Ghana":        1550, "Tunisia":     1540,
-    "Saudi Arabia":1520, "Iran":         1530, "Wales":       1610,
-    "Costa Rica":  1510, "Canada":       1560, "Qatar":       1490,
+    "France":1870,"Spain":1855,"Argentina":1850,"England":1820,"Portugal":1810,
+    "Brazil":1800,"Netherlands":1760,"Morocco":1740,"Belgium":1730,"Germany":1720,
+    "Croatia":1700,"Colombia":1680,"Senegal":1660,"Mexico":1640,"USA":1630,
+    "Uruguay":1680,"Japan":1640,"Switzerland":1650,"Norway":1630,"Austria":1600,
+    "Australia":1580,"South Korea":1590,"Ecuador":1570,"Tunisia":1540,"Ghana":1550,
+    "Saudi Arabia":1520,"Iran":1530,"Ivory Coast":1580,"South Africa":1510,
+    "Czechia":1570,"Scotland":1600,"Bosnia and Herzegovina":1540,"Sweden":1580,
+    "Turkey":1590,"Canada":1560,"Qatar":1490,"Haiti":1420,"Paraguay":1540,
+    "Algeria":1540,"Jordan":1490,"Uzbekistan":1470,"DR Congo":1520,"Egypt":1550,
+    "Iraq":1500,"New Zealand":1450,"Panama":1470,"Cape Verde":1480,"Curacao":1400,
 }
 
-WORLD_CUP_GROUPS_2022 = {
-    "A": ["Qatar", "Ecuador", "Senegal", "Netherlands"],
-    "B": ["England", "Iran", "USA", "Wales"],
-    "C": ["Argentina", "Saudi Arabia", "Mexico", "Poland"],
-    "D": ["France", "Australia", "Denmark", "Tunisia"],
-    "E": ["Spain", "Costa Rica", "Germany", "Japan"],
-    "F": ["Belgium", "Canada", "Morocco", "Croatia"],
-    "G": ["Brazil", "Serbia", "Switzerland", "Cameroon"],
-    "H": ["Portugal", "Ghana", "Uruguay", "South Korea"],
+WC_2026_GROUPS = {
+    "A":["Mexico","South Korea","South Africa","Czechia"],
+    "B":["Canada","Switzerland","Qatar","Bosnia and Herzegovina"],
+    "C":["Brazil","Morocco","Scotland","Haiti"],
+    "D":["USA","Australia","Paraguay","Turkey"],
+    "E":["Germany","Ecuador","Ivory Coast","Curacao"],
+    "F":["Netherlands","Japan","Tunisia","Sweden"],
+    "G":["Belgium","Iran","Egypt","New Zealand"],
+    "H":["Spain","Uruguay","Saudi Arabia","Cape Verde"],
+    "I":["France","Senegal","Norway","Iraq"],
+    "J":["Argentina","Austria","Algeria","Jordan"],
+    "K":["Portugal","Colombia","Uzbekistan","DR Congo"],
+    "L":["England","Croatia","Panama","Ghana"],
 }
 
-def elo_win_probability(rating_a, rating_b):
-    """Calculate win probability using Elo formula."""
-    diff = (rating_a - rating_b) / 400
-    prob_a = 1 / (1 + 10 ** (-diff))
-    return prob_a
-
-def generate_match_result(team_a, team_b, neutral=True, tournament_stage="group"):
-    """Generate a realistic match result based on ratings."""
-    ra = TEAM_RATINGS.get(team_a, 1600)
-    rb = TEAM_RATINGS.get(team_b, 1600)
-
-    # Home advantage
-    if not neutral:
-        ra += 100
-
-    prob_a = elo_win_probability(ra, rb)
-    prob_b = elo_win_probability(rb, ra)
-    prob_draw = 0.28  # ~28% draw rate in international football
-
-    # Normalize
-    prob_a_win = prob_a * (1 - prob_draw)
-    prob_b_win = prob_b * (1 - prob_draw)
-
-    outcome_rand = np.random.random()
-    if outcome_rand < prob_a_win:
-        outcome = "home_win"
-    elif outcome_rand < prob_a_win + prob_draw:
-        outcome = "draw"
-    else:
-        outcome = "away_win"
-
-    # Generate scoreline
-    avg_goals = 2.6  # avg goals per WC match
-    strength_diff = (ra - rb) / 400
-
-    if outcome == "home_win":
-        goals_a = max(1, int(np.random.poisson(avg_goals * (0.55 + strength_diff * 0.2))))
-        goals_b = max(0, int(np.random.poisson(avg_goals * (0.45 - strength_diff * 0.2))))
-        if goals_a <= goals_b:
-            goals_a = goals_b + 1
-    elif outcome == "draw":
-        goals_a = int(np.random.poisson(avg_goals * 0.5))
-        goals_b = goals_a
-    else:
-        goals_b = max(1, int(np.random.poisson(avg_goals * (0.55 + strength_diff * 0.2))))
-        goals_a = max(0, int(np.random.poisson(avg_goals * (0.45 - strength_diff * 0.2))))
-        if goals_b <= goals_a:
-            goals_b = goals_a + 1
-
-    return {
-        "team_a": team_a,
-        "team_b": team_b,
-        "goals_a": goals_a,
-        "goals_b": goals_b,
-        "outcome": outcome,
-        "rating_a": ra,
-        "rating_b": rb,
-        "prob_a_win": round(prob_a_win, 4),
-        "prob_draw": round(prob_draw, 4),
-        "prob_b_win": round(prob_b_win, 4),
-        "neutral": neutral,
-        "stage": tournament_stage
-    }
-
-def generate_historical_matches(n=3000):
-    """Generate historical international match dataset."""
-    teams = list(TEAM_RATINGS.keys())
-    matches = []
-    years = list(range(2010, 2026))
-
-    for _ in range(n):
-        team_a, team_b = np.random.choice(teams, 2, replace=False)
-        year = np.random.choice(years)
-        neutral = np.random.random() > 0.3
-        stage = np.random.choice(
-            ["friendly", "group", "round_of_16", "quarter", "semi", "final"],
-            p=[0.4, 0.3, 0.1, 0.1, 0.06, 0.04]
-        )
-        result = generate_match_result(team_a, team_b, neutral, stage)
-        result["year"] = year
-        matches.append(result)
-
-    return pd.DataFrame(matches)
-
-def generate_team_features():
-    """Generate team feature dataset for ML model."""
-    teams = list(TEAM_RATINGS.keys())
-    features = []
-
-    for team in teams:
-        rating = TEAM_RATINGS[team]
-        # Simulate form (last 10 matches W/D/L points)
-        form = round(np.random.normal(loc=rating/600, scale=0.3), 2)
-        form = max(0.5, min(3.0, form))
-
-        features.append({
-            "team": team,
-            "elo_rating": rating,
-            "form_points": form,
-            "avg_goals_scored": round(np.random.normal(1.4 + (rating-1600)/800, 0.2), 2),
-            "avg_goals_conceded": round(np.random.normal(1.0 - (rating-1600)/1200, 0.15), 2),
-            "wc_titles": {
-                "Brazil": 5, "Germany": 4, "Italy": 4, "Argentina": 3,
-                "France": 2, "England": 1, "Spain": 1, "Uruguay": 2
-            }.get(team, 0),
-            "squad_value_m": round(np.random.normal(rating/3, 50), 0),
-            "world_ranking": sorted(TEAM_RATINGS, key=TEAM_RATINGS.get, reverse=True).index(team) + 1
-        })
-
-    return pd.DataFrame(features)
-
-def generate_wc2022_fixtures():
-    """Generate 2022 World Cup group stage fixtures."""
-    fixtures = []
-    for group, teams in WORLD_CUP_GROUPS_2022.items():
-        for i in range(len(teams)):
-            for j in range(i+1, len(teams)):
-                result = generate_match_result(teams[i], teams[j], neutral=True, tournament_stage="group")
-                result["group"] = group
-                result["tournament"] = "FIFA World Cup 2022"
-                fixtures.append(result)
-    return pd.DataFrame(fixtures)
+WC_TITLES = {"Brazil":5,"Germany":4,"Argentina":3,"France":2,"England":1,"Spain":1,"Uruguay":2}
 
 if __name__ == "__main__":
-    os.makedirs("data/raw", exist_ok=True)
-    os.makedirs("data/processed", exist_ok=True)
+    print("World Cup 2026 — Real Data Pipeline")
+    if not os.path.exists(RESULTS_PATH):
+        print("Downloading real match data...")
+        urllib.request.urlretrieve(RESULTS_URL, RESULTS_PATH)
+    results = pd.read_csv(RESULTS_PATH)
+    print(f"  ✓ {len(results):,} real matches loaded")
 
-    print("Generating historical matches...")
-    historical = generate_historical_matches(3000)
-    historical.to_csv("data/raw/historical_matches.csv", index=False)
-    print(f"  ✓ {len(historical)} historical matches saved")
-
-    print("Generating team features...")
-    features = generate_team_features()
-    features.to_csv("data/raw/team_features.csv", index=False)
+    ranks = sorted(TEAM_RATINGS, key=TEAM_RATINGS.get, reverse=True)
+    features = pd.DataFrame([{
+        "team":t,"elo_rating":r,"form_points":1.5,
+        "avg_goals_scored":1.4,"avg_goals_conceded":1.0,
+        "wc_titles":WC_TITLES.get(t,0),"squad_value_m":r/3,
+        "world_ranking":ranks.index(t)+1
+    } for t,r in TEAM_RATINGS.items()])
+    features.to_csv(os.path.join(RAW_DIR,"team_features.csv"),index=False)
     print(f"  ✓ {len(features)} team profiles saved")
 
-    print("Generating WC 2022 fixtures...")
-    fixtures = generate_wc2022_fixtures()
-    fixtures.to_csv("data/raw/wc2022_fixtures.csv", index=False)
-    print(f"  ✓ {len(fixtures)} WC fixtures saved")
-
-    # Save ratings as JSON for easy access
-    with open("data/raw/team_ratings.json", "w") as f:
-        json.dump(TEAM_RATINGS, f, indent=2)
-    print("  ✓ Team ratings saved")
-
-    print("\nAll data generated successfully!")
-    print(historical.head())
+    with open(os.path.join(RAW_DIR,"team_ratings.json"),"w") as f:
+        json.dump(TEAM_RATINGS,f,indent=2)
+    with open(os.path.join(RAW_DIR,"wc2026_groups.json"),"w") as f:
+        json.dump(WC_2026_GROUPS,f,indent=2)
+    print("  ✓ Done!")
